@@ -11,6 +11,12 @@
 - Renamed the public project from **Agent Session Bridge** to **Trajectory Fidelity Bridge (TFB)** on 2026-09-28 after identifying an older, unrelated public project that already used the former name. The projects are unaffiliated.
 - The previous PyPI distribution and the `agent-session` command remain available for compatibility; new releases use the renamed distribution and also provide `tfb`.
 
+## [0.4.2] - 2026-10-21
+
+### Fixed
+
+- Removed the obsolete `DTZ001` noqa suppression that caused Ruff's `RUF100` check to fail.
+
 ## [0.4.1] - 2026-09-28
 
 ### Changed

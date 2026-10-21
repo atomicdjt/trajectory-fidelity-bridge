@@ -73,7 +73,7 @@ python -m pip install atomicdjt-trajectory-fidelity-bridge
 To install the current published release explicitly:
 
 ```bash
-python -m pip install atomicdjt-trajectory-fidelity-bridge==0.4.1
+python -m pip install atomicdjt-trajectory-fidelity-bridge==0.4.2
 ```
 
 For development from source:
