@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "atomicdjt-trajectory-fidelity-bridge"
-version = "0.4.1"
+version = "0.4.2"
 description = "ATIF-based reference implementation for portable coding-agent trajectories with explicit fidelity and loss reporting."
 readme = "README.md"
 license = {text = "MIT"}

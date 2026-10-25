@@ -18,7 +18,7 @@ def parse_source_time(ts: str) -> int:
         offset = dt.utcoffset()
         if dt.tzinfo is None or offset is None:
             raise ValueError()
-        local_delta = dt.replace(tzinfo=None) - datetime(1970, 1, 1)  # noqa: DTZ001
+        local_delta = dt.replace(tzinfo=None) - datetime(1970, 1, 1)
         delta = local_delta - offset
         nanoseconds = (delta.days * 86400 + delta.seconds) * 1_000_000_000 + delta.microseconds * 1_000
         return nanoseconds
