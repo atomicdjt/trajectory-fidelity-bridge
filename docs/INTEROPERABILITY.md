@@ -39,11 +39,11 @@ The CI workflow runs the reproduction and verifier after those checks.
 
 ## ATIF v1.8 compatibility result
 
-The published PyPI `atif` distribution currently exposes `1.7.0` only. TFB therefore remains declared as `atif>=1.7,<1.8` and continues to emit `ATIF-v1.7`. Installing TFB with a normal resolver cannot select ATIF v1.8: it fails because the package bound excludes v1.8, and the package index currently has no `atif==1.8` release to install.
+**November 5, 2026 update:** PyPI now lists `atif` 1.8.0. TFB remains declared as `atif>=1.7,<1.8` and emits `ATIF-v1.7`; its normal resolver therefore cannot select 1.8. [Dependency PR #49](https://github.com/atomicdjt/trajectory-fidelity-bridge/pull/49) proposes widening the bound and must be assessed separately. The source-model experiment below predates the published 1.8.0 package and is not a test of that package.
 
 The current Harbor ATIF implementation at commit `d6514c49e3dc321df46c6653cb3ee8166ab12efe` empirically validated the generated TFB artifact as both `ATIF-v1.7` and, after changing only the schema-version label, `ATIF-v1.8`; both retained five steps. Harbor's v1.8 model also accepts the new `audio` content part, while the installed ATIF 1.7.0 model accepts only `text` and `image` content parts and rejects audio. TFB has no Claude source audio mapping and correctly does not claim to emit v1.8 audio.
 
-Decision: do not widen the dependency or migrate the emitted schema in this sprint. The v1.7 behavior is compatible with the current v1.8 reference model for the fields TFB uses, but v1.8's new audio surface needs an intentional source/mapping design and a released dependency before migration. This is compatibility evidence, not a claim of universal ATIF v1.8 support.
+Decision: do not widen the dependency or migrate the emitted schema in this sprint. The v1.7 behavior is compatible with the current v1.8 reference model for the fields TFB uses, but v1.8's new audio surface needs an intentional source/mapping design and validation against the released dependency before migration. This is compatibility evidence, not a claim of universal ATIF v1.8 support.
 
 ## Source positions and timestamp findings
 
