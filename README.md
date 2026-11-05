@@ -46,6 +46,8 @@ The current Antigravity reference mapper reports any ATIF system messages it can
 
 See [the ATIF mapping](docs/FORMAT.md) and [layered architecture](docs/ARCHITECTURE.md) for exact preserved, transformed, and unsupported semantics.
 
+Non-string Claude record types and message roles are reported as unsupported records, allowing conversion to continue to later valid records. Other malformed fields may still prevent conversion; inspect the fidelity report and output.
+
 The reproducible synthetic interoperability corpus, semantic oracle, adversarial verifier, current ATIF v1.8 audit, and cross-converter evidence are documented in [docs/INTEROPERABILITY.md](docs/INTEROPERABILITY.md). A passing corpus check is not independent practitioner validation or proof of universal provider compatibility.
 
 ## What works today
