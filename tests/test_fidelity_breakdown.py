@@ -209,3 +209,21 @@ def test_redaction_preserves_model_metrics_and_step_provenance():
     fidelity = _fidelity(trajectory)
     assert fidelity["duplicate_usage_records"] == 0
     assert isinstance(fidelity["unsupported_record_types"], list)
+
+
+def test_non_string_record_types_and_roles_are_reported_and_later_records_survive():
+    trajectory = _parse(
+        {"type": []},
+        {"type": {}},
+        {"type": "user", "message": {"role": [], "content": "discarded"}},
+        {"type": "assistant", "message": {"role": {}, "content": "discarded"}},
+        _user("still here"),
+    )
+    assert [step.message for step in trajectory.steps] == ["still here"]
+    fidelity = _fidelity(trajectory)
+    assert fidelity["unsupported_source_records"] == 4
+    assert {entry["type"]: entry["records"] for entry in fidelity["unsupported_record_types"]} == {
+        "(untyped record)": 2,
+        "user (unsupported role)": 1,
+        "assistant (unsupported role)": 1,
+    }
