@@ -39,11 +39,13 @@ The CI workflow runs the reproduction and verifier after those checks.
 
 ## ATIF v1.8 compatibility result
 
-**November 5, 2026 update:** PyPI now lists `atif` 1.8.0. TFB remains declared as `atif>=1.7,<1.8` and emits `ATIF-v1.7`; its normal resolver therefore cannot select 1.8. [Dependency PR #49](https://github.com/atomicdjt/trajectory-fidelity-bridge/pull/49) proposes widening the bound and must be assessed separately. The source-model experiment below predates the published 1.8.0 package and is not a test of that package.
+**November 5, 2026:** [PR #49](https://github.com/atomicdjt/trajectory-fidelity-bridge/pull/49) widened the main-branch dependency to `atif>=1.7,<1.9`. The converter still emits `ATIF-v1.7`; the separately published TFB 0.4.2 distribution retains its original dependency constraint until a later release.
 
-The current Harbor ATIF implementation at commit `d6514c49e3dc321df46c6653cb3ee8166ab12efe` empirically validated the generated TFB artifact as both `ATIF-v1.7` and, after changing only the schema-version label, `ATIF-v1.8`; both retained five steps. Harbor's v1.8 model also accepts the new `audio` content part, while the installed ATIF 1.7.0 model accepts only `text` and `image` content parts and rejects audio. TFB has no Claude source audio mapping and correctly does not claim to emit v1.8 audio.
+A local comparison used separate Windows/Python 3.14 virtual environments with released `atif==1.7.0` and `atif==1.8.0`, each with Pydantic 2.14.3 and the optional observability dependencies. With this checkout's source on `PYTHONPATH`, the full suite passed **222 tests in each environment**. Both versions passed the synthetic corpus verifier with zero conflicts; their generated JSON objects were equal after removing only the volatile conversion timestamp. `pip check` passed in each environment. The 1.8 environment ran the source directly because the comparison began before the dependency bound was widened. The [PR CI run](https://github.com/atomicdjt/trajectory-fidelity-bridge/actions/runs/42133758960) subsequently installed ATIF 1.8.0 and passed its six Python 3.11/3.12 OS matrix jobs and dependency audit.
 
-Decision: do not widen the dependency or migrate the emitted schema in this sprint. The v1.7 behavior is compatible with the current v1.8 reference model for the fields TFB uses, but v1.8's new audio surface needs an intentional source/mapping design and validation against the released dependency before migration. This is compatibility evidence, not a claim of universal ATIF v1.8 support.
+These results cover the existing tests and one synthetic corpus, not every provider trace, ATIF 1.8 feature, or native target import. In particular, TFB has no Claude audio mapping and does not claim to emit 1.8 audio. They are not independent practitioner validation.
+
+Earlier, the Harbor ATIF implementation at commit `d6514c49e3dc321df46c6653cb3ee8166ab12efe` validated the generated TFB artifact as both `ATIF-v1.7` and, after changing only the schema-version label, `ATIF-v1.8`; both retained five steps. That reference-model experiment predates the released package comparison and does not itself establish migration to v1.8.
 
 ## Source positions and timestamp findings
 
