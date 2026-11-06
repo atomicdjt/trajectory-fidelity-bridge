@@ -84,7 +84,7 @@ def parse_claude_jsonl(file_stream: TextIO) -> Trajectory:
             continue
 
         record_type = record.get("type")
-        if record_type not in {"user", "assistant", "system"}:
+        if not isinstance(record_type, str) or record_type not in {"user", "assistant", "system"}:
             fidelity.count_unsupported_record(*_classify_record(record))
             continue
 
@@ -100,7 +100,7 @@ def parse_claude_jsonl(file_stream: TextIO) -> Trajectory:
             continue
 
         role = message.get("role", record_type)
-        if role not in {"user", "assistant", "system"}:
+        if not isinstance(role, str) or role not in {"user", "assistant", "system"}:
             fidelity.count_unsupported_record(f"{record_type} (unsupported role)", "unrecognized")
             continue
 
@@ -133,7 +133,7 @@ def parse_claude_jsonl(file_stream: TextIO) -> Trajectory:
                     Step(
                         step_id=len(steps) + 1,
                         timestamp=timestamp,
-                        source=role,
+                        source="user" if role == "user" else "system",
                         message=content,
                         extra=_step_extra(line_number, None),
                     )
