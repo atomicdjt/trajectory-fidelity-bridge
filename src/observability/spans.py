@@ -4,6 +4,7 @@ from atif import Trajectory
 from opentelemetry import trace
 from opentelemetry.trace import Status, StatusCode
 
+from bridge.tool_results import tool_result_is_error
 from observability.mapping import (
     get_openinference_span_attributes,
     get_tool_span_attributes,
@@ -124,25 +125,16 @@ def project_trajectory(trajectory: Trajectory, privacy_mode: str = "metadata-onl
 
                         # Look for correlated observation result
                         result_str = None
+                        error_str = None
                         is_error = False
+                        has_result = False
 
                         if step.observation and step.observation.results:
                             for res in step.observation.results:
                                 if res.source_call_id == tool_call.tool_call_id:
-                                    is_error_val = res.extra.get("is_error") if res.extra else None
-                                    if (
-                                        is_error_val is True
-                                        or (
-                                            isinstance(is_error_val, str)
-                                            and is_error_val.strip().lower() in ("true", "1")
-                                        )
-                                        or (
-                                            isinstance(is_error_val, int)
-                                            and is_error_val == 1
-                                            and not isinstance(is_error_val, bool)
-                                        )
-                                    ):
-                                        is_error = True
+                                    has_result = True
+                                    result_is_error = tool_result_is_error(res.extra)
+                                    is_error = is_error or result_is_error
                                     # We don't have a specific status code enum in basic ATIF,
                                     # but we assume success if a result is present, or parse from extra.
                                     if (
@@ -155,12 +147,15 @@ def project_trajectory(trajectory: Trajectory, privacy_mode: str = "metadata-onl
                                             _redact_text as redact_text,
                                         )
                                         text_content = project_text(res.content)
-                                        result_str = (
+                                        projected_content = (
                                             redact_text(text_content)
                                             if privacy_mode == "redacted-content"
                                             else text_content
                                         )
-                                    break
+                                        if result_str is None:
+                                            result_str = projected_content
+                                        if result_is_error and error_str is None:
+                                            error_str = projected_content
 
                         if result_str:
                             tool_span.set_attribute("output.value", result_str)
@@ -172,9 +167,9 @@ def project_trajectory(trajectory: Trajectory, privacy_mode: str = "metadata-onl
 
                         if is_error:
                             tool_span.set_status(
-                                Status(StatusCode.ERROR, description=result_str or "Tool execution error")
+                                Status(StatusCode.ERROR, description=error_str or "Tool execution error")
                             )
-                        else:
+                        elif has_result:
                             tool_span.set_status(Status(StatusCode.OK))
 
                         tool_span.end(end_time=tool_end)

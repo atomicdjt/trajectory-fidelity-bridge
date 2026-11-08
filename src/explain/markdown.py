@@ -25,6 +25,8 @@ from typing import Any
 
 from atif import ContentPart, Step, ToolCall, Trajectory
 
+from bridge.tool_results import tool_result_is_error
+
 DEFAULT_MAX_CHARS = 2000
 
 # Facts a manifest may supply. Anything else is rejected, so a manifest cannot smuggle
@@ -188,7 +190,7 @@ def _content_text(content: str | list[ContentPart] | None) -> str:
 
 
 def _is_error(result_extra: dict[str, Any] | None) -> bool:
-    return bool(result_extra and result_extra.get("is_error") is True)
+    return tool_result_is_error(result_extra)
 
 
 def _plural(count: int, singular: str, plural: str | None = None) -> str:
@@ -462,7 +464,9 @@ def _tool_call_table(trajectory: Trajectory) -> list[str]:
     lines += [
         "",
         ("Outcome is judged from the ATIF document: `error` when the correlated result carries "
-        "an `is_error` flag, `result` when a result is present without one."),
+        "a recognized `is_error` (TFB) or `tool_result_is_error` (Harbor Claude) flag, "
+        "`result` when a result is present without one. These flags are converter "
+        "conventions, not standard ATIF status fields."),
         "",
     ]
     return lines

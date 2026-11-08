@@ -15,6 +15,7 @@ Trajectory Fidelity Bridge provides an optional observability projection that co
 | `message` | `input.value` / `output.value` | High | Present only in explicit content modes. |
 | `tool_calls` | `Span` (Kind: `TOOL`), `tool.name`, `tool.id` | High | Tool calls are mapped with `tool_call_id`. |
 | `observation.results` | TOOL `output.value` | High | Present only in explicit content modes. Correlated via `source_call_id`. |
+| tool error extras | TOOL status `ERROR` | Bounded | Recognizes TFB `is_error` and Harbor Claude `tool_result_is_error`; these are converter conventions, not ATIF-standard fields. |
 | timestamps | Span points/boundaries | High | Step timestamps are source-observed points; tool execution duration is zero as observations do not have independent timestamps. |
 
 ## Trace Topology
@@ -25,6 +26,25 @@ Coding-agent transcripts contain sensitive information. The projection supports 
 - `metadata-only` (default): Only structure, roles, and tool names are exported. No text content or tool arguments are exported.
 - `redacted-content`: Redacts known secrets on a copy before exporting.
 - `full-content`: Exports all content. **Warning:** this can export source code, secrets, commands, file paths, proprietary information, and personal information.
+
+## Tool outcome interpretation
+
+Both `explain` and `observe` recognize the two error flags above. Boolean `true`,
+integer `1`, and strings `true`/`1` (case-insensitive, trimmed) indicate an error.
+An explicit error wins over a false flag or another non-error result correlated
+with the same call. Unrelated calls cannot supply another call's status.
+Result text and arbitrary nested metadata are not parsed for errors.
+
+Telemetry retains the existing `OK` policy for a correlated result without a
+recognized error; this is not proof that an unfamiliar converter reports failures
+using these conventions. A call with no correlated result now remains `UNSET`.
+Metadata-only error descriptions remain generic. Content modes use the first
+correlated error's text for the status description, applying redaction when selected.
+The output attribute still contains the first nonempty correlated result; additional
+result bodies are not aggregated. Timestamp and duration behavior is unchanged.
+
+See [the Harbor reproduction](../experiments/harbor_tool_errors/README.md) for the
+real-session evidence and the limits of this compatibility claim.
 
 ## Fidelity Analysis
 - **Preserved:** Tool invocation sequence, conversation roles, chronological order.
