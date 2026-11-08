@@ -1,5 +1,9 @@
 # Interoperability corpus
 
+For a provider-derived consumer defect reproduced against current Harbor, see
+[Harbor Claude errors through TFB consumers](../experiments/harbor_tool_errors/README.md).
+That experiment is separate from the synthetic corpus below.
+
 This corpus makes disagreements between independent ATIF implementations reproducible and inspectable. It is deliberately small, synthetic, and source-grounded.
 
 The purpose of this corpus is not to prove that Trajectory Fidelity Bridge is correct; it is to make disagreements between independent implementations reproducible and inspectable.

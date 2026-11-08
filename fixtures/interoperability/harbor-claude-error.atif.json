@@ -1,0 +1,76 @@
+{
+  "schema_version": "ATIF-v1.7",
+  "session_id": "session-demo",
+  "trajectory_id": null,
+  "agent": {
+    "name": "claude-code",
+    "version": "2.1.266",
+    "model_name": "claude-sonnet-5",
+    "tool_definitions": null,
+    "extra": {
+      "cwds": [
+        "/workspace"
+      ],
+      "git_branches": [
+        "HEAD"
+      ]
+    }
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "timestamp": "2026-09-25T02:29:30.083Z",
+      "source": "agent",
+      "model_name": "claude-sonnet-5",
+      "reasoning_effort": null,
+      "message": "Total is 17. Now attempting to read missing_file.txt (expected to fail).",
+      "reasoning_content": null,
+      "tool_calls": [
+        {
+          "tool_call_id": "tool-call-0003",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/workspace\\missing_file.txt"
+          },
+          "extra": {
+            "raw_arguments": {
+              "file_path": "/workspace\\missing_file.txt"
+            },
+            "tool_use_name": "Read"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "tool-call-0003",
+            "content": "File does not exist. Note: your current working directory is /workspace.\n\n[error] tool reported failure",
+            "subagent_trajectory_ref": null,
+            "extra": {
+              "tool_result_metadata": {
+                "is_error": true,
+                "raw_tool_result": {
+                  "type": "tool_result",
+                  "tool_use_id": "tool-call-0003",
+                  "content": "File does not exist. Note: your current working directory is /workspace.",
+                  "is_error": true
+                }
+              },
+              "tool_result_is_error": true
+            }
+          }
+        ]
+      },
+      "is_copied_context": null,
+      "llm_call_count": 1,
+      "extra": {
+        "is_sidechain": false,
+        "cwd": "/workspace"
+      }
+    }
+  ],
+  "notes": null,
+  "continued_trajectory_ref": null,
+  "extra": null,
+  "subagent_trajectories": null
+}
