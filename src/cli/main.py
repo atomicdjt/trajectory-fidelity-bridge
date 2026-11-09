@@ -5,12 +5,14 @@ from pathlib import Path
 
 from adapters.antigravity.exporter import export_with_report
 from adapters.claude.parser import parse_claude_jsonl
+from adapters.codex.parser import parse_codex_jsonl
 from security.redact import redact_trajectory
 
 
 def import_session(args: argparse.Namespace) -> None:
     with open(args.source, encoding="utf-8") as source_file:
-        trajectory = redact_trajectory(parse_claude_jsonl(source_file))
+        parser = parse_codex_jsonl if args.from_format == "codex" else parse_claude_jsonl
+        trajectory = redact_trajectory(parser(source_file))
 
     output = trajectory.model_dump_json(indent=2)
     if args.output:
@@ -92,16 +94,11 @@ def convert_session(args: argparse.Namespace) -> None:
 def handoff_session(args: argparse.Namespace) -> None:
     print("STATUS: UnsupportedNativeImport")
     print(
-        "Reason: Antigravity CLI does not currently expose a supported "
-        "'import-session' or public API for writing session state."
+        "Reason: TFB cannot import its output into a native Antigravity session."
     )
     print(
-        "Rule check: Silently mutating the internal `.system_generated` databases "
-        "is strictly forbidden by the security guidelines."
-    )
-    print(
-        "Action: Outputting an ATIF-derived JSONL payload that could be supplied "
-        "to an `agy import-session` command once one exists."
+        "Action: Printing an Antigravity-shaped reference payload; "
+        "no native session will be created or resumed."
     )
     print("=" * 80)
     convert_session(args)
@@ -112,12 +109,17 @@ def observe_session(args: argparse.Namespace) -> None:
         from observability.exporter import setup_exporter
         from observability.spans import project_trajectory
     except ImportError:
-        print('Observability dependencies missing. Install with: pip install -e ".[observability]"')
+        print(
+            'Observability dependencies missing. Install with: '
+            'python -m pip install "atomicdjt-trajectory-fidelity-bridge[observability]"'
+        )
         sys.exit(1)
 
     with open(args.file, "r", encoding="utf-8") as f:
         if args.from_format == "claude-code":
             trajectory = parse_claude_jsonl(f)
+        elif args.from_format == "codex":
+            trajectory = parse_codex_jsonl(f)
         elif args.from_format == "atif":
             from atif import Trajectory
             trajectory = Trajectory.model_validate(json.load(f))
@@ -150,7 +152,7 @@ def main() -> None:
     )
     import_parser.add_argument("--source", required=True)
     import_parser.add_argument(
-        "--from", dest="from_format", required=True, choices=["claude-code"]
+        "--from", dest="from_format", required=True, choices=["claude-code", "codex"]
     )
     import_parser.add_argument("--output")
     import_parser.add_argument("--report", action="store_true")
@@ -174,7 +176,14 @@ def main() -> None:
     )
     explain_parser.set_defaults(func=explain_session)
 
-    convert_parser = subparsers.add_parser("convert")
+    convert_parser = subparsers.add_parser(
+        "convert",
+        help="Generate a reference payload; does not import a native session.",
+        description=(
+            "Generate an Antigravity-shaped reference payload from a Claude Code transcript. "
+            "This does not import or resume a native Antigravity session."
+        ),
+    )
     convert_parser.add_argument(
         "--from", dest="from_format", required=True, choices=["claude-code"]
     )
@@ -184,7 +193,15 @@ def main() -> None:
     convert_parser.add_argument("file")
     convert_parser.set_defaults(func=convert_session)
 
-    handoff_parser = subparsers.add_parser("handoff")
+    handoff_parser = subparsers.add_parser(
+        "handoff",
+        help="Legacy reference output only; native session import is unsupported.",
+        description=(
+            "Legacy compatibility command: native Antigravity session import is unsupported. "
+            "This command prints UnsupportedNativeImport and a reference payload; it does not "
+            "import or resume a session. Use 'tfb convert' for the reference payload alone."
+        ),
+    )
     handoff_parser.add_argument(
         "--from", dest="from_format", required=True, choices=["claude-code"]
     )
@@ -196,7 +213,7 @@ def main() -> None:
 
     observe_parser = subparsers.add_parser("observe")
     observe_parser.add_argument(
-        "--from", dest="from_format", required=True, choices=["claude-code", "atif"]
+        "--from", dest="from_format", required=True, choices=["claude-code", "codex", "atif"]
     )
     observe_parser.add_argument(
         "--backend", default="phoenix", help="Observability backend (default: phoenix)"

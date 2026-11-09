@@ -100,7 +100,8 @@ def render_report(
     lines: list[str] = [
         "# Agent session report",
         "",
-        ("Generated from an ATIF trajectory by `agent-session explain`. Each value comes "
+        ("Generated from an ATIF trajectory by `tfb explain` (also available as "
+        "`agent-session explain`). Each value comes "
         "from the ATIF document or from the optional manifest, and is labelled with which. "
         "Nothing here is inferred, and the report contains no time of its own."),
         "",

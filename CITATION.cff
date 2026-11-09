@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: "Turner"
     given-names: "David"
-version: 0.4.3
+version: 0.5.0
 url: "https://github.com/atomicdjt/trajectory-fidelity-bridge"
 repository-code: "https://github.com/atomicdjt/trajectory-fidelity-bridge"
 license: MIT

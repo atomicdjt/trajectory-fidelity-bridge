@@ -128,6 +128,7 @@ def project_trajectory(trajectory: Trajectory, privacy_mode: str = "metadata-onl
                         error_str = None
                         is_error = False
                         has_result = False
+                        unknown_outcome = False
 
                         if step.observation and step.observation.results:
                             for res in step.observation.results:
@@ -135,6 +136,9 @@ def project_trajectory(trajectory: Trajectory, privacy_mode: str = "metadata-onl
                                     has_result = True
                                     result_is_error = tool_result_is_error(res.extra)
                                     is_error = is_error or result_is_error
+                                    provenance = (res.extra or {}).get("agent_session_bridge")
+                                    if isinstance(provenance, dict) and provenance.get("outcome") == "unknown":
+                                        unknown_outcome = True
                                     # We don't have a specific status code enum in basic ATIF,
                                     # but we assume success if a result is present, or parse from extra.
                                     if (
@@ -169,7 +173,7 @@ def project_trajectory(trajectory: Trajectory, privacy_mode: str = "metadata-onl
                             tool_span.set_status(
                                 Status(StatusCode.ERROR, description=error_str or "Tool execution error")
                             )
-                        elif has_result:
+                        elif has_result and not unknown_outcome:
                             tool_span.set_status(Status(StatusCode.OK))
 
                         tool_span.end(end_time=tool_end)
