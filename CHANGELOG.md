@@ -11,6 +11,12 @@
 - Renamed the public project from **Agent Session Bridge** to **Trajectory Fidelity Bridge (TFB)** on 2026-09-28 after identifying an older, unrelated public project that already used the former name. The projects are unaffiliated.
 - The previous PyPI distribution and the `agent-session` command remain available for compatibility; new releases use the renamed distribution and also provide `tfb`.
 
+## [0.5.1] - 2026-11-08
+
+### Fixed
+
+- Remove the corrupt animated quick-tour image from the package page. The existing banner and text documentation remain available.
+
 ## [0.5.0] - 2026-11-08
 
 ### Added
