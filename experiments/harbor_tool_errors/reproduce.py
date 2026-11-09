@@ -24,6 +24,7 @@ def main():
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--full-output", type=Path, help="Also write the full peer conversion")
     args = parser.parse_args()
     source = Path("fixtures/real-session/claude-code-controlled-demo.source.jsonl")
     manifest = json.loads(source.with_name(
@@ -49,6 +50,10 @@ def main():
                for r in (s.get("observation") or {}).get("results", [])]
     errors = [r for r in results if (r.get("extra") or {}).get("tool_result_is_error") is True]
     assert (calls, len(results), len(errors)) == (6, 6, 1)
+    if args.full_output:
+        args.full_output.parent.mkdir(parents=True, exist_ok=True)
+        args.full_output.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n",
+                                    encoding="utf-8")
     document["steps"] = [s for s in document["steps"] if any(
         (r.get("extra") or {}).get("tool_result_is_error") is True
         for r in (s.get("observation") or {}).get("results", [])

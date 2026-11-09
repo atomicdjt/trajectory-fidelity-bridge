@@ -72,6 +72,40 @@ mode. This establishes the OTLP wire boundary, not Phoenix UI behavior or a
 production deployment. The normal regression tests use the real OpenTelemetry
 SDK with an in-memory exporter, isolated from the global tracer provider.
 
+## Local Phoenix backend validation (2026-11-08)
+
+With Windows, Python 3.12.14, Phoenix 21.0.0 and the pinned Harbor conversion
+above, the complete public sanitized source was converted and exported with TFB
+at main commit `f05fc6b6bfbdfb44598e64fb5cbd06e72f65cdbd`. Phoenix used a new
+local SQLite database and a loopback-only listener. The TFB observability runtime
+used Python 3.14.7, ATIF 1.8.0 and OpenTelemetry SDK/exporter 1.45.2.
+
+```text
+python -m pip install arize-phoenix==21.0.0
+phoenix serve
+python experiments/harbor_tool_errors/reproduce.py --output work/minimal.json --full-output work/full.json
+tfb observe --from atif --endpoint http://127.0.0.1:16006/v1/traces work/full.json
+```
+
+For this run, `PHOENIX_HOST=127.0.0.1`, `PHOENIX_PORT=16006`, and
+`PHOENIX_WORKING_DIR` pointed to an isolated local directory. The full Harbor
+artifact was generated from the public source using the same sentinel-removal
+procedure as `reproduce.py`, without the final one-step minimization. In the
+Phoenix database, one trace contained 15 spans: one CHAIN, eight AGENT and six
+TOOL. Five tool statuses were OK; the `tool-call-0003` Read was ERROR with generic
+description. Each TOOL was parented by an AGENT under the CHAIN. No span stored
+an input or output attribute in the default metadata-only mode. The Phoenix UI
+trace tree also displayed `Read ERROR`. Since the source timestamps are historical,
+the UI's default seven-day window did not show it; a 56-day range did.
+To rerun the optional database integration check, point `TFB_PHOENIX_DB` at the
+SQLite database of a dedicated Phoenix instance containing only this one exported
+trace and run `python -m pytest -q tests/test_phoenix_backend_optional.py`. The
+check opens the database read-only; it skips when the variable is absent. Phoenix
+is not a core test dependency.
+
+This was one local backend and one controlled real-provider session, not Phoenix
+cloud, arbitrary provider versions, production validation, or independent adoption.
+
 ## Validation and boundaries
 
 The two initial regression tests failed on baseline: the report had zero errors,
