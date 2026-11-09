@@ -37,7 +37,10 @@ Result text and arbitrary nested metadata are not parsed for errors.
 
 Telemetry retains the existing `OK` policy for a correlated result without a
 recognized error; this is not proof that an unfamiliar converter reports failures
-using these conventions. A call with no correlated result now remains `UNSET`.
+using these conventions. A call with no correlated result remains `UNSET`.
+The Codex rollout adapter marks result outcomes as unknown because the observed
+serialized output does not carry an independently reliable success flag; those
+tool spans also remain `UNSET` unless an explicit recognized error is present.
 Metadata-only error descriptions remain generic. Content modes use the first
 correlated error's text for the status description, applying redaction when selected.
 The output attribute still contains the first nonempty correlated result; additional

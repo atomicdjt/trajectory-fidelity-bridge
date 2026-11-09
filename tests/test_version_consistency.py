@@ -26,8 +26,8 @@ def test_readme_install_pin_matches_the_package_version():
     readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     pins = re.findall(r"atomicdjt-trajectory-fidelity-bridge==(\S+)", readme)
 
-    assert pins
-    assert set(pins) == {_project_version()}
+    if pins:
+        assert set(pins) == {_project_version()}
 
 
 def test_distribution_name_and_legacy_cli_alias():

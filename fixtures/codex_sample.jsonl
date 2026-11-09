@@ -1,0 +1,6 @@
+{"type":"session_meta","timestamp":"2026-01-01T12:00:00Z","payload":{"id":"synthetic-session","cli_version":"0.0.example"}}
+{"type":"response_item","timestamp":"2026-01-01T12:00:01Z","payload":{"id":"message-1","type":"message","role":"user","content":[{"type":"input_text","text":"Read the sample file."}]}}
+{"type":"response_item","timestamp":"2026-01-01T12:00:02Z","payload":{"id":"call-1","type":"function_call","call_id":"synthetic-call","name":"read_file","arguments":"{\"path\":\"sample.txt\"}"}}
+{"type":"response_item","timestamp":"2026-01-01T12:00:03Z","payload":{"id":"result-1","type":"function_call_output","call_id":"synthetic-call","output":"Hello from a synthetic file."}}
+{"type":"response_item","timestamp":"2026-01-01T12:00:04Z","payload":{"id":"message-2","type":"message","role":"assistant","content":[{"type":"output_text","text":"The sample says hello."}]}}
+{"type":"event_msg","timestamp":"2026-01-01T12:00:05Z","payload":{"type":"token_count","info":{}}}

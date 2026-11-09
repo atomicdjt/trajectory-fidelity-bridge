@@ -114,6 +114,8 @@ A strong PR should answer:
 - Does the change alter the security boundary?
 - Does it introduce a new provider-specific assumption into an TFB ATIF extension or adapter?
 
+Maintainer release steps are documented in [docs/RELEASING.md](docs/RELEASING.md).
+
 ## AI-assisted contributions
 
 AI-assisted development is welcome. Contributors remain responsible for the submitted behavior, tests, licensing, security implications, and factual claims.

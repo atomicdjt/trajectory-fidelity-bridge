@@ -1,0 +1,1 @@
+"""Codex session-rollout adapter."""

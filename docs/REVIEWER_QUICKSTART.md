@@ -1,6 +1,6 @@
 # Independent reviewer quickstart — Trajectory Fidelity Bridge
 
-**Scope:** Python 3.11+; current source on `main`, with the separately published PyPI 0.4.2 distribution (checked November 5, 2026). This is a data-conversion and fidelity-reporting tool, **not** a native session-resumption engine.
+**Scope:** Python 3.11+ and current source on `main`. See the [PyPI release page](https://pypi.org/project/atomicdjt-trajectory-fidelity-bridge/) for the published version. This is a data-conversion and fidelity-reporting tool, **not** a native session-resumption engine.
 
 ## Minimal source verification
 
@@ -15,15 +15,15 @@ MYPYPATH=src python -m mypy --namespace-packages --explicit-package-bases src
 python -m ruff check .
 ```
 
-The `MYPYPATH=src` syntax is for POSIX shells; in PowerShell set `$env:MYPYPATH = "src"` before running the mypy command without its prefix. If a tool invocation fails because of environment/version differences, record that failure and compare the [CI configuration](../.github/workflows/ci.yml) rather than silently adjusting the evidence. The primary package can also be installed independently with `python -m pip install atomicdjt-trajectory-fidelity-bridge==0.4.2`.
+The `MYPYPATH=src` syntax is for POSIX shells; in PowerShell set `$env:MYPYPATH = "src"` before running the mypy command without its prefix. If a tool invocation fails because of environment/version differences, record that failure and compare the [CI configuration](../.github/workflows/ci.yml) rather than silently adjusting the evidence. The package can also be installed independently with `python -m pip install atomicdjt-trajectory-fidelity-bridge`.
 
 ## Inspect a concrete conversion
 
 Run this synthetic fixture from the repository root after installing from source:
 
 ```bash
-agent-session import --from claude-code --source fixtures/interoperability/claude-comprehensive.source.jsonl --output trajectory.atif.json --report
-agent-session explain trajectory.atif.json --output report.md
+tfb import --from claude-code --source fixtures/interoperability/claude-comprehensive.source.jsonl --output trajectory.atif.json --report
+tfb explain trajectory.atif.json --output report.md
 ```
 
 For the checked-in fixture, the report should show six preserved source records, two tool calls, two correlated observations, two unsupported records and one unsupported block. Inspect the ATIF and report, then compare source facts with the [semantic oracle and verifier](INTEROPERABILITY.md). The fixture is synthetic, including its fake secret-like values; this exercise is not a live-provider test. Generated files contain fixture content and should be kept out of commits.

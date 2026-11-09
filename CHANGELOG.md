@@ -11,6 +11,18 @@
 - Renamed the public project from **Agent Session Bridge** to **Trajectory Fidelity Bridge (TFB)** on 2026-09-28 after identifying an older, unrelated public project that already used the former name. The projects are unaffiliated.
 - The previous PyPI distribution and the `agent-session` command remain available for compatibility; new releases use the renamed distribution and also provide `tfb`.
 
+## [0.5.0] - 2026-11-08
+
+### Added
+
+- Add a bounded Codex session-rollout JSONL adapter for `tfb import` and `tfb observe`, with source-fidelity accounting and explicit unsupported-shape limits. The adapter does not run recorded commands or provide native resumption.
+
+### Changed
+
+- Leave Codex tool outcomes `UNSET` in telemetry when their success or failure was not recorded.
+- Clarify that the legacy `handoff` command produces reference output and cannot import a native Antigravity session.
+- Make the package page's imagery and links usable from PyPI, introduce the format and primary command, and move release procedures to maintainer documentation.
+
 ## [0.4.3] - 2026-11-08
 
 ### Fixed

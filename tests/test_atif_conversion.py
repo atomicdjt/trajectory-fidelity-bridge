@@ -318,6 +318,25 @@ def test_cli_report_keeps_stdout_as_one_atif_document():
     assert "--- TFB Fidelity Report ---" in completed.stderr
 
 
+def test_cli_handoff_help_discloses_unsupported_native_import():
+    completed = subprocess.run(
+        [sys.executable, "-m", "cli.main", "handoff", "--help"],
+        check=True, capture_output=True, text=True,
+    )
+    help_text = " ".join(completed.stdout.split())
+    assert "native Antigravity session import is unsupported" in help_text
+    assert "does not import or resume" in help_text
+
+
+def test_cli_root_help_identifies_reference_only_commands():
+    completed = subprocess.run(
+        [sys.executable, "-m", "cli.main", "--help"],
+        check=True, capture_output=True, text=True,
+    )
+    assert "reference payload" in completed.stdout
+    assert "native session import is unsupported" in " ".join(completed.stdout.split())
+
+
 def test_parser_counts_non_object_json_records_without_aborting():
     """Fails if valid JSON scalars or arrays reach dictionary field access."""
     source = StringIO(
