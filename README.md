@@ -26,10 +26,6 @@ Trajectory Fidelity Bridge is an MIT-licensed reference implementation for conve
 >
 > **External validation wanted:** sanitized provider fixtures that expose a normalization failure, disagreements with the fidelity report, evidence about additional documented ingestion boundaries, and reproducible cross-provider transformation cases are especially useful. [Open an issue](https://github.com/atomicdjt/trajectory-fidelity-bridge/issues) with the smallest safe fixture that demonstrates the problem.
 
-![Trajectory Fidelity Bridge quick tour](https://raw.githubusercontent.com/atomicdjt/trajectory-fidelity-bridge/4b1c43bc94a0dcc8f68e8810d06969f97c01956d/docs/images/agent-session-bridge-quick-tour.gif)
-
-*Animated architecture tour based on documented behavior; it is not a fabricated live screen recording.*
-
 ## What ATIF provides and what TFB adds
 
 ATIF is the portable trajectory layer: ordered system/user/agent steps, structured tool calls, call-correlated observations, agent metadata, metrics, and a namespaced `extra` extension mechanism. TFB converts provider-specific transcript shapes into that public format.
