@@ -11,6 +11,17 @@
 - Renamed the public project from **Agent Session Bridge** to **Trajectory Fidelity Bridge (TFB)** on 2026-09-28 after identifying an older, unrelated public project that already used the former name. The projects are unaffiliated.
 - The previous PyPI distribution and the `agent-session` command remain available for compatibility; new releases use the renamed distribution and also provide `tfb`.
 
+## [0.4.3] - 2026-11-08
+
+### Fixed
+
+- Recognize Harbor Claude tool-result errors in reports and OpenTelemetry projections. Calls without correlated results remain UNSET. Explicit errors take precedence across correlated results.
+
+### Verified
+
+- A sanitized real Claude Code session converted by Harbor was exported to a local Phoenix 21.0.0 backend. Its stored trace had six tool spans: five OK and one ERROR. This is one local validation, not a general compatibility guarantee.
+- Main now accepts ATIF Python packages 1.7 and 1.8 while continuing to emit ATIF v1.7.
+
 ## [0.4.2] - 2026-10-21
 
 ### Fixed
