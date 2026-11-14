@@ -1,0 +1,114 @@
+{
+  "schema_version": "ATIF-v1.7",
+  "session_id": "synthetic-ambiguous-session",
+  "trajectory_id": null,
+  "agent": {
+    "name": "codex",
+    "version": "0.0.synthetic",
+    "model_name": null,
+    "tool_definitions": null,
+    "extra": {
+      "provider": "openai"
+    }
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "timestamp": "2026-11-14T12:00:00Z",
+      "source": "user",
+      "model_name": null,
+      "reasoning_effort": null,
+      "message": "Perform the synthetic action for fixture-record-001.",
+      "reasoning_content": null,
+      "tool_calls": null,
+      "observation": null,
+      "metrics": null,
+      "extra": {
+        "agent_session_bridge": {
+          "source_line": 2
+        }
+      },
+      "llm_call_count": null,
+      "is_copied_context": null
+    },
+    {
+      "step_id": 2,
+      "timestamp": "2026-11-14T12:00:01Z",
+      "source": "agent",
+      "model_name": null,
+      "reasoning_effort": null,
+      "message": "",
+      "reasoning_content": null,
+      "tool_calls": [
+        {
+          "tool_call_id": "synthetic-call-001",
+          "function_name": "synthetic_external_action",
+          "arguments": {
+            "action": "create_marker",
+            "record": "fixture-record-001"
+          },
+          "extra": null
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "synthetic-call-001",
+            "content": "Tool call timed out; no provider receipt or authoritative effect status was returned.",
+            "subagent_trajectory_ref": null,
+            "extra": {
+              "agent_session_bridge": {
+                "outcome": "unknown"
+              }
+            }
+          }
+        ]
+      },
+      "metrics": null,
+      "extra": {
+        "agent_session_bridge": {
+          "source_line": 3
+        }
+      },
+      "llm_call_count": null,
+      "is_copied_context": null
+    }
+  ],
+  "notes": null,
+  "final_metrics": null,
+  "continued_trajectory_ref": null,
+  "extra": {
+    "agent_session_bridge": {
+      "provenance": {
+        "original_format": "codex-rollout-jsonl",
+        "converted_by": "trajectory-fidelity-bridge",
+        "conversion_timestamp": "2026-11-14T11:25:01.827300+00:00"
+      },
+      "fidelity": {
+        "source_records_preserved": 4,
+        "tool_calls_preserved": 1,
+        "observation_results_preserved": 1,
+        "unsupported_source_records": 0,
+        "unsupported_source_blocks": 0,
+        "orphaned_tool_results": 0,
+        "omitted_tool_result_timestamps": 1,
+        "invalid_source_timestamps": 0,
+        "unsupported_record_types": [],
+        "unsupported_block_types": [],
+        "ignored_fields": [
+          {
+            "field": "payload.id",
+            "records": 3
+          }
+        ],
+        "synthetic_agent_records": 0,
+        "duplicate_usage_records": 0,
+        "conflicting_usage_records": 0,
+        "transformations": [
+          "Moved Codex tool outputs to call-correlated ATIF observations."
+        ]
+      }
+    }
+  },
+  "subagent_trajectories": null
+}

@@ -1,0 +1,1 @@
+ATIF trajectory written to experiments/ambiguous_tool_outcomes/evidence/after_commit_response_loss.atif.json
