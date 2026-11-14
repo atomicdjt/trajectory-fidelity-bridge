@@ -1,0 +1,1 @@
+ATIF trajectory written to experiments/ambiguous_tool_outcomes/evidence/before_commit_timeout.atif.json

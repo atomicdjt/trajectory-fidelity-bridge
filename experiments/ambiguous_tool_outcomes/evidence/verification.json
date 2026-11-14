@@ -1,0 +1,933 @@
+{
+  "schema_version": "tfb-ambiguous-tool-outcomes-verification-v1",
+  "summary": {
+    "passed": true,
+    "checks": 93,
+    "conflicts": 0
+  },
+  "caller_visible_conclusion": {
+    "external_effect_outcome": "UNKNOWN",
+    "basis": "the same timeout output is present and no authoritative provider receipt is present",
+    "tfb_annotation": "unknown"
+  },
+  "provider_ground_truth": {
+    "before_commit_timeout": {
+      "actual_effect_count": 0,
+      "events": [
+        {
+          "event": "request_received"
+        },
+        {
+          "event": "deadline_expired_before_commit"
+        }
+      ]
+    },
+    "after_commit_response_loss": {
+      "actual_effect_count": 1,
+      "events": [
+        {
+          "event": "request_received"
+        },
+        {
+          "event": "effect_committed",
+          "effect_index": 1
+        },
+        {
+          "event": "response_lost"
+        },
+        {
+          "event": "deadline_expired"
+        }
+      ]
+    }
+  },
+  "retry_decision": {
+    "schema_version": "tfb-ambiguous-tool-outcome-decision-v1",
+    "decision_basis": "caller-visible source transcript only",
+    "scenarios": {
+      "before_commit_timeout": {
+        "external_effect_outcome": "UNKNOWN",
+        "automatic_retry": "NOT_AUTHORIZED_FROM_AVAILABLE_EVIDENCE"
+      },
+      "after_commit_response_loss": {
+        "external_effect_outcome": "UNKNOWN",
+        "automatic_retry": "NOT_AUTHORIZED_FROM_AVAILABLE_EVIDENCE"
+      }
+    },
+    "retry_may_be_reconsidered_if": [
+      "A documented, still-valid provider deduplication guarantee covers the original operation and the retry.",
+      "Authoritative reconciliation establishes that the original action did not occur.",
+      "An application-specific recovery procedure has demonstrated safety properties for this action."
+    ],
+    "insufficient_evidence": [
+      "A timeout by itself.",
+      "An absent success receipt.",
+      "A stale, ambiguous, unavailable, or nonauthoritative reconciliation result.",
+      "A tool-call ID without a provider deduplication contract."
+    ]
+  },
+  "normalizer_command_boundary": {
+    "checked": true,
+    "normalizer_inputs": [
+      "experiments/ambiguous_tool_outcomes/evidence/caller-visible.source.jsonl",
+      "experiments/ambiguous_tool_outcomes/evidence/caller-visible.source.jsonl"
+    ],
+    "source_hashes": [
+      "df1a2a14da1d040e62274740a385d8c5387ebadf061272b1f6bfea6b6a9bb1fa",
+      "df1a2a14da1d040e62274740a385d8c5387ebadf061272b1f6bfea6b6a9bb1fa"
+    ],
+    "ground_truth_arguments": []
+  },
+  "checks": [
+    {
+      "name": "source_session_id",
+      "status": "PASS",
+      "expected": "synthetic-ambiguous-session",
+      "observed": "synthetic-ambiguous-session"
+    },
+    {
+      "name": "source_codex_item_ids",
+      "status": "PASS",
+      "expected": [
+        "item-user-001",
+        "item-call-001",
+        "item-output-001"
+      ],
+      "observed": [
+        "item-user-001",
+        "item-call-001",
+        "item-output-001"
+      ]
+    },
+    {
+      "name": "source_user_prompt",
+      "status": "PASS",
+      "expected": "Perform the synthetic action for fixture-record-001.",
+      "observed": "Perform the synthetic action for fixture-record-001."
+    },
+    {
+      "name": "source_call_id",
+      "status": "PASS",
+      "expected": "synthetic-call-001",
+      "observed": "synthetic-call-001"
+    },
+    {
+      "name": "source_tool_name",
+      "status": "PASS",
+      "expected": "synthetic_external_action",
+      "observed": "synthetic_external_action"
+    },
+    {
+      "name": "source_tool_arguments",
+      "status": "PASS",
+      "expected": {
+        "action": "create_marker",
+        "record": "fixture-record-001"
+      },
+      "observed": {
+        "action": "create_marker",
+        "record": "fixture-record-001"
+      }
+    },
+    {
+      "name": "source_call_timestamp",
+      "status": "PASS",
+      "expected": "2026-11-14T12:00:01Z",
+      "observed": "2026-11-14T12:00:01Z"
+    },
+    {
+      "name": "source_timeout_text",
+      "status": "PASS",
+      "expected": "Tool call timed out; no provider receipt or authoritative effect status was returned.",
+      "observed": "Tool call timed out; no provider receipt or authoritative effect status was returned."
+    },
+    {
+      "name": "source_result_correlation",
+      "status": "PASS",
+      "expected": "synthetic-call-001",
+      "observed": "synthetic-call-001"
+    },
+    {
+      "name": "source_result_timestamp",
+      "status": "PASS",
+      "expected": "2026-11-14T12:00:04Z",
+      "observed": "2026-11-14T12:00:04Z"
+    },
+    {
+      "name": "no_provider_operation_or_idempotency_identity_in_source",
+      "status": "PASS",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "name": "before_commit_timeout_truth_label",
+      "status": "PASS",
+      "expected": "before_commit_timeout",
+      "observed": "before_commit_timeout"
+    },
+    {
+      "name": "before_commit_timeout_commit_events",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "before_commit_timeout_effect_list_count",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "before_commit_timeout_actual_effect_count",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "before_commit_timeout_no_provider_operation_id",
+      "status": "PASS",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "name": "before_commit_timeout_no_idempotency_key",
+      "status": "PASS",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "name": "before_commit_timeout_no_retry_attempt",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "before_commit_timeout_harness_key_is_labeled_non_provider_identity",
+      "status": "PASS",
+      "expected": "test-harness association only; not a provider operation ID",
+      "observed": "test-harness association only; not a provider operation ID"
+    },
+    {
+      "name": "after_commit_response_loss_truth_label",
+      "status": "PASS",
+      "expected": "after_commit_response_loss",
+      "observed": "after_commit_response_loss"
+    },
+    {
+      "name": "after_commit_response_loss_commit_events",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "after_commit_response_loss_effect_list_count",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "after_commit_response_loss_actual_effect_count",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "after_commit_response_loss_no_provider_operation_id",
+      "status": "PASS",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "name": "after_commit_response_loss_no_idempotency_key",
+      "status": "PASS",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "name": "after_commit_response_loss_no_retry_attempt",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "after_commit_response_loss_harness_key_is_labeled_non_provider_identity",
+      "status": "PASS",
+      "expected": "test-harness association only; not a provider operation ID",
+      "observed": "test-harness association only; not a provider operation ID"
+    },
+    {
+      "name": "ground_truths_differ",
+      "status": "PASS",
+      "expected": [
+        0,
+        1
+      ],
+      "observed": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "before_commit_timeout_atif_validation",
+      "status": "PASS",
+      "expected": null,
+      "observed": null
+    },
+    {
+      "name": "before_commit_timeout_schema_version",
+      "status": "PASS",
+      "expected": "ATIF-v1.7",
+      "observed": "ATIF-v1.7"
+    },
+    {
+      "name": "before_commit_timeout_session_id_preserved",
+      "status": "PASS",
+      "expected": "synthetic-ambiguous-session",
+      "observed": "synthetic-ambiguous-session"
+    },
+    {
+      "name": "before_commit_timeout_step_sources",
+      "status": "PASS",
+      "expected": [
+        "user",
+        "agent"
+      ],
+      "observed": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "before_commit_timeout_step_timestamps",
+      "status": "PASS",
+      "expected": [
+        "2026-11-14T12:00:00Z",
+        "2026-11-14T12:00:01Z"
+      ],
+      "observed": [
+        "2026-11-14T12:00:00Z",
+        "2026-11-14T12:00:01Z"
+      ]
+    },
+    {
+      "name": "before_commit_timeout_user_prompt_preserved",
+      "status": "PASS",
+      "expected": "Perform the synthetic action for fixture-record-001.",
+      "observed": "Perform the synthetic action for fixture-record-001."
+    },
+    {
+      "name": "before_commit_timeout_tool_call_count",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "before_commit_timeout_tool_call_id_preserved",
+      "status": "PASS",
+      "expected": "synthetic-call-001",
+      "observed": "synthetic-call-001"
+    },
+    {
+      "name": "before_commit_timeout_tool_name_preserved",
+      "status": "PASS",
+      "expected": "synthetic_external_action",
+      "observed": "synthetic_external_action"
+    },
+    {
+      "name": "before_commit_timeout_tool_arguments_normalized",
+      "status": "PASS",
+      "expected": {
+        "action": "create_marker",
+        "record": "fixture-record-001"
+      },
+      "observed": {
+        "action": "create_marker",
+        "record": "fixture-record-001"
+      }
+    },
+    {
+      "name": "before_commit_timeout_observation_result_count",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "before_commit_timeout_result_correlation_preserved",
+      "status": "PASS",
+      "expected": "synthetic-call-001",
+      "observed": "synthetic-call-001"
+    },
+    {
+      "name": "before_commit_timeout_timeout_text_preserved",
+      "status": "PASS",
+      "expected": "Tool call timed out; no provider receipt or authoritative effect status was returned.",
+      "observed": "Tool call timed out; no provider receipt or authoritative effect status was returned."
+    },
+    {
+      "name": "before_commit_timeout_external_effect_outcome_unknown",
+      "status": "PASS",
+      "expected": "unknown",
+      "observed": "unknown"
+    },
+    {
+      "name": "before_commit_timeout_result_timestamp_omitted_from_receipt",
+      "status": "PASS",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "name": "before_commit_timeout_omitted_timestamp_counted",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "before_commit_timeout_source_records_preserved",
+      "status": "PASS",
+      "expected": 4,
+      "observed": 4
+    },
+    {
+      "name": "before_commit_timeout_unsupported_source_records",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "before_commit_timeout_unsupported_source_blocks",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "before_commit_timeout_orphaned_tool_results",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "before_commit_timeout_invalid_source_timestamps",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "before_commit_timeout_call_counted",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "before_commit_timeout_result_counted",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "before_commit_timeout_event_ids_omitted_and_accounted_for",
+      "status": "PASS",
+      "expected": 3,
+      "observed": 3
+    },
+    {
+      "name": "before_commit_timeout_codex_item_ids_not_copied",
+      "status": "PASS",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "name": "before_commit_timeout_no_provider_identity_in_receipt",
+      "status": "PASS",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "name": "after_commit_response_loss_atif_validation",
+      "status": "PASS",
+      "expected": null,
+      "observed": null
+    },
+    {
+      "name": "after_commit_response_loss_schema_version",
+      "status": "PASS",
+      "expected": "ATIF-v1.7",
+      "observed": "ATIF-v1.7"
+    },
+    {
+      "name": "after_commit_response_loss_session_id_preserved",
+      "status": "PASS",
+      "expected": "synthetic-ambiguous-session",
+      "observed": "synthetic-ambiguous-session"
+    },
+    {
+      "name": "after_commit_response_loss_step_sources",
+      "status": "PASS",
+      "expected": [
+        "user",
+        "agent"
+      ],
+      "observed": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "after_commit_response_loss_step_timestamps",
+      "status": "PASS",
+      "expected": [
+        "2026-11-14T12:00:00Z",
+        "2026-11-14T12:00:01Z"
+      ],
+      "observed": [
+        "2026-11-14T12:00:00Z",
+        "2026-11-14T12:00:01Z"
+      ]
+    },
+    {
+      "name": "after_commit_response_loss_user_prompt_preserved",
+      "status": "PASS",
+      "expected": "Perform the synthetic action for fixture-record-001.",
+      "observed": "Perform the synthetic action for fixture-record-001."
+    },
+    {
+      "name": "after_commit_response_loss_tool_call_count",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "after_commit_response_loss_tool_call_id_preserved",
+      "status": "PASS",
+      "expected": "synthetic-call-001",
+      "observed": "synthetic-call-001"
+    },
+    {
+      "name": "after_commit_response_loss_tool_name_preserved",
+      "status": "PASS",
+      "expected": "synthetic_external_action",
+      "observed": "synthetic_external_action"
+    },
+    {
+      "name": "after_commit_response_loss_tool_arguments_normalized",
+      "status": "PASS",
+      "expected": {
+        "action": "create_marker",
+        "record": "fixture-record-001"
+      },
+      "observed": {
+        "action": "create_marker",
+        "record": "fixture-record-001"
+      }
+    },
+    {
+      "name": "after_commit_response_loss_observation_result_count",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "after_commit_response_loss_result_correlation_preserved",
+      "status": "PASS",
+      "expected": "synthetic-call-001",
+      "observed": "synthetic-call-001"
+    },
+    {
+      "name": "after_commit_response_loss_timeout_text_preserved",
+      "status": "PASS",
+      "expected": "Tool call timed out; no provider receipt or authoritative effect status was returned.",
+      "observed": "Tool call timed out; no provider receipt or authoritative effect status was returned."
+    },
+    {
+      "name": "after_commit_response_loss_external_effect_outcome_unknown",
+      "status": "PASS",
+      "expected": "unknown",
+      "observed": "unknown"
+    },
+    {
+      "name": "after_commit_response_loss_result_timestamp_omitted_from_receipt",
+      "status": "PASS",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "name": "after_commit_response_loss_omitted_timestamp_counted",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "after_commit_response_loss_source_records_preserved",
+      "status": "PASS",
+      "expected": 4,
+      "observed": 4
+    },
+    {
+      "name": "after_commit_response_loss_unsupported_source_records",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "after_commit_response_loss_unsupported_source_blocks",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "after_commit_response_loss_orphaned_tool_results",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "after_commit_response_loss_invalid_source_timestamps",
+      "status": "PASS",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "name": "after_commit_response_loss_call_counted",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "after_commit_response_loss_result_counted",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "after_commit_response_loss_event_ids_omitted_and_accounted_for",
+      "status": "PASS",
+      "expected": 3,
+      "observed": 3
+    },
+    {
+      "name": "after_commit_response_loss_codex_item_ids_not_copied",
+      "status": "PASS",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "name": "after_commit_response_loss_no_provider_identity_in_receipt",
+      "status": "PASS",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "name": "normalized_receipts_semantically_equal",
+      "status": "PASS",
+      "expected": {
+        "schema_version": "ATIF-v1.7",
+        "session_id": "synthetic-ambiguous-session",
+        "trajectory_id": null,
+        "agent": {
+          "name": "codex",
+          "version": "0.0.synthetic",
+          "model_name": null,
+          "tool_definitions": null,
+          "extra": {
+            "provider": "openai"
+          }
+        },
+        "steps": [
+          {
+            "step_id": 1,
+            "timestamp": "2026-11-14T12:00:00Z",
+            "source": "user",
+            "model_name": null,
+            "reasoning_effort": null,
+            "message": "Perform the synthetic action for fixture-record-001.",
+            "reasoning_content": null,
+            "tool_calls": null,
+            "observation": null,
+            "metrics": null,
+            "extra": {
+              "agent_session_bridge": {
+                "source_line": 2
+              }
+            },
+            "llm_call_count": null,
+            "is_copied_context": null
+          },
+          {
+            "step_id": 2,
+            "timestamp": "2026-11-14T12:00:01Z",
+            "source": "agent",
+            "model_name": null,
+            "reasoning_effort": null,
+            "message": "",
+            "reasoning_content": null,
+            "tool_calls": [
+              {
+                "tool_call_id": "synthetic-call-001",
+                "function_name": "synthetic_external_action",
+                "arguments": {
+                  "action": "create_marker",
+                  "record": "fixture-record-001"
+                },
+                "extra": null
+              }
+            ],
+            "observation": {
+              "results": [
+                {
+                  "source_call_id": "synthetic-call-001",
+                  "content": "Tool call timed out; no provider receipt or authoritative effect status was returned.",
+                  "subagent_trajectory_ref": null,
+                  "extra": {
+                    "agent_session_bridge": {
+                      "outcome": "unknown"
+                    }
+                  }
+                }
+              ]
+            },
+            "metrics": null,
+            "extra": {
+              "agent_session_bridge": {
+                "source_line": 3
+              }
+            },
+            "llm_call_count": null,
+            "is_copied_context": null
+          }
+        ],
+        "notes": null,
+        "final_metrics": null,
+        "continued_trajectory_ref": null,
+        "extra": {
+          "agent_session_bridge": {
+            "provenance": {
+              "original_format": "codex-rollout-jsonl",
+              "converted_by": "trajectory-fidelity-bridge"
+            },
+            "fidelity": {
+              "source_records_preserved": 4,
+              "tool_calls_preserved": 1,
+              "observation_results_preserved": 1,
+              "unsupported_source_records": 0,
+              "unsupported_source_blocks": 0,
+              "orphaned_tool_results": 0,
+              "omitted_tool_result_timestamps": 1,
+              "invalid_source_timestamps": 0,
+              "unsupported_record_types": [],
+              "unsupported_block_types": [],
+              "ignored_fields": [
+                {
+                  "field": "payload.id",
+                  "records": 3
+                }
+              ],
+              "synthetic_agent_records": 0,
+              "duplicate_usage_records": 0,
+              "conflicting_usage_records": 0,
+              "transformations": [
+                "Moved Codex tool outputs to call-correlated ATIF observations."
+              ]
+            }
+          }
+        },
+        "subagent_trajectories": null
+      },
+      "observed": {
+        "schema_version": "ATIF-v1.7",
+        "session_id": "synthetic-ambiguous-session",
+        "trajectory_id": null,
+        "agent": {
+          "name": "codex",
+          "version": "0.0.synthetic",
+          "model_name": null,
+          "tool_definitions": null,
+          "extra": {
+            "provider": "openai"
+          }
+        },
+        "steps": [
+          {
+            "step_id": 1,
+            "timestamp": "2026-11-14T12:00:00Z",
+            "source": "user",
+            "model_name": null,
+            "reasoning_effort": null,
+            "message": "Perform the synthetic action for fixture-record-001.",
+            "reasoning_content": null,
+            "tool_calls": null,
+            "observation": null,
+            "metrics": null,
+            "extra": {
+              "agent_session_bridge": {
+                "source_line": 2
+              }
+            },
+            "llm_call_count": null,
+            "is_copied_context": null
+          },
+          {
+            "step_id": 2,
+            "timestamp": "2026-11-14T12:00:01Z",
+            "source": "agent",
+            "model_name": null,
+            "reasoning_effort": null,
+            "message": "",
+            "reasoning_content": null,
+            "tool_calls": [
+              {
+                "tool_call_id": "synthetic-call-001",
+                "function_name": "synthetic_external_action",
+                "arguments": {
+                  "action": "create_marker",
+                  "record": "fixture-record-001"
+                },
+                "extra": null
+              }
+            ],
+            "observation": {
+              "results": [
+                {
+                  "source_call_id": "synthetic-call-001",
+                  "content": "Tool call timed out; no provider receipt or authoritative effect status was returned.",
+                  "subagent_trajectory_ref": null,
+                  "extra": {
+                    "agent_session_bridge": {
+                      "outcome": "unknown"
+                    }
+                  }
+                }
+              ]
+            },
+            "metrics": null,
+            "extra": {
+              "agent_session_bridge": {
+                "source_line": 3
+              }
+            },
+            "llm_call_count": null,
+            "is_copied_context": null
+          }
+        ],
+        "notes": null,
+        "final_metrics": null,
+        "continued_trajectory_ref": null,
+        "extra": {
+          "agent_session_bridge": {
+            "provenance": {
+              "original_format": "codex-rollout-jsonl",
+              "converted_by": "trajectory-fidelity-bridge"
+            },
+            "fidelity": {
+              "source_records_preserved": 4,
+              "tool_calls_preserved": 1,
+              "observation_results_preserved": 1,
+              "unsupported_source_records": 0,
+              "unsupported_source_blocks": 0,
+              "orphaned_tool_results": 0,
+              "omitted_tool_result_timestamps": 1,
+              "invalid_source_timestamps": 0,
+              "unsupported_record_types": [],
+              "unsupported_block_types": [],
+              "ignored_fields": [
+                {
+                  "field": "payload.id",
+                  "records": 3
+                }
+              ],
+              "synthetic_agent_records": 0,
+              "duplicate_usage_records": 0,
+              "conflicting_usage_records": 0,
+              "transformations": [
+                "Moved Codex tool outputs to call-correlated ATIF observations."
+              ]
+            }
+          }
+        },
+        "subagent_trajectories": null
+      }
+    },
+    {
+      "name": "before_commit_timeout_decision_uses_unknown",
+      "status": "PASS",
+      "expected": "UNKNOWN",
+      "observed": "UNKNOWN"
+    },
+    {
+      "name": "before_commit_timeout_retry_not_authorized_from_current_evidence",
+      "status": "PASS",
+      "expected": "NOT_AUTHORIZED_FROM_AVAILABLE_EVIDENCE",
+      "observed": "NOT_AUTHORIZED_FROM_AVAILABLE_EVIDENCE"
+    },
+    {
+      "name": "after_commit_response_loss_decision_uses_unknown",
+      "status": "PASS",
+      "expected": "UNKNOWN",
+      "observed": "UNKNOWN"
+    },
+    {
+      "name": "after_commit_response_loss_retry_not_authorized_from_current_evidence",
+      "status": "PASS",
+      "expected": "NOT_AUTHORIZED_FROM_AVAILABLE_EVIDENCE",
+      "observed": "NOT_AUTHORIZED_FROM_AVAILABLE_EVIDENCE"
+    },
+    {
+      "name": "caller_side_external_effect_classification",
+      "status": "PASS",
+      "expected": "UNKNOWN",
+      "observed": "UNKNOWN"
+    },
+    {
+      "name": "two_normalization_commands",
+      "status": "PASS",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "name": "both_normalization_commands_succeeded",
+      "status": "PASS",
+      "expected": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "both_commands_use_same_source",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "both_commands_use_same_source_hash",
+      "status": "PASS",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "name": "normalizer_not_given_truth_files",
+      "status": "PASS",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "name": "normalizer_source_hash_matches_fixture",
+      "status": "PASS",
+      "expected": "df1a2a14da1d040e62274740a385d8c5387ebadf061272b1f6bfea6b6a9bb1fa",
+      "observed": "df1a2a14da1d040e62274740a385d8c5387ebadf061272b1f6bfea6b6a9bb1fa"
+    },
+    {
+      "name": "normalizer_uses_supported_codex_import",
+      "status": "PASS",
+      "expected": [
+        true,
+        true
+      ],
+      "observed": [
+        true,
+        true
+      ]
+    }
+  ]
+}

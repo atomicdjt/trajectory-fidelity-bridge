@@ -1,0 +1,34 @@
+{
+  "schema_version": "tfb-synthetic-provider-truth-v1",
+  "scenario": "after_commit_response_loss",
+  "harness_join_key": {
+    "kind": "codex_tool_call_id",
+    "value": "synthetic-call-001",
+    "meaning": "test-harness association only; not a provider operation ID"
+  },
+  "provider_operation_identity_observed": false,
+  "idempotency_key_observed": false,
+  "retry_attempt_count": 0,
+  "events": [
+    {
+      "event": "request_received"
+    },
+    {
+      "event": "effect_committed",
+      "effect_index": 1
+    },
+    {
+      "event": "response_lost"
+    },
+    {
+      "event": "deadline_expired"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "synthetic_marker_created",
+      "record": "fixture-record-001"
+    }
+  ],
+  "actual_effect_count": 1
+}

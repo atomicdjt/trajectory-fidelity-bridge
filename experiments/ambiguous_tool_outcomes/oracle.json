@@ -1,0 +1,51 @@
+{
+  "schema_version": "tfb-ambiguous-tool-outcomes-oracle-v1",
+  "source": {
+    "session_id": "synthetic-ambiguous-session",
+    "user_prompt": "Perform the synthetic action for fixture-record-001.",
+    "message_timestamp": "2026-11-14T12:00:00Z",
+    "tool_call_id": "synthetic-call-001",
+    "tool_name": "synthetic_external_action",
+    "tool_arguments": {
+      "action": "create_marker",
+      "record": "fixture-record-001"
+    },
+    "call_timestamp": "2026-11-14T12:00:01Z",
+    "timeout_text": "Tool call timed out; no provider receipt or authoritative effect status was returned.",
+    "result_timestamp": "2026-11-14T12:00:04Z",
+    "codex_item_ids": ["item-user-001", "item-call-001", "item-output-001"]
+  },
+  "expected_ground_truth": {
+    "before_commit_timeout": 0,
+    "after_commit_response_loss": 1
+  },
+  "normalized": {
+    "schema_version": "ATIF-v1.7",
+    "step_sources": ["user", "agent"],
+    "tool_call_id": "synthetic-call-001",
+    "tool_name": "synthetic_external_action",
+    "tool_arguments": {
+      "action": "create_marker",
+      "record": "fixture-record-001"
+    },
+    "result_call_id": "synthetic-call-001",
+    "result_text": "Tool call timed out; no provider receipt or authoritative effect status was returned.",
+    "external_effect_outcome": "unknown",
+    "fidelity": {
+      "source_records_preserved": 4,
+      "tool_calls_preserved": 1,
+      "observation_results_preserved": 1,
+      "unsupported_source_records": 0,
+      "unsupported_source_blocks": 0,
+      "orphaned_tool_results": 0,
+      "omitted_tool_result_timestamps": 1,
+      "invalid_source_timestamps": 0,
+      "ignored_field": "payload.id",
+      "ignored_field_records": 3
+    }
+  },
+  "decision": {
+    "external_effect_outcome": "UNKNOWN",
+    "automatic_retry_authorized": false
+  }
+}
