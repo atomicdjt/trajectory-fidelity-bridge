@@ -52,7 +52,7 @@ runtime measurements, and this experiment infers no duration from them.
 | `decision-record.json` | Caller-side conclusion and conditional retry requirements, kept separate from both the transcript and provider truth. |
 | `verify.py` | Independent checker. It reads the source, truth ledgers, oracle, and generated ATIF documents; it does not import the TFB parser. It validates ATIF with the installed ATIF model, then checks the raw source/output fields directly. |
 | `verification.json` in `evidence/` | Observed checks, ground-truth counts, unknown classification, omissions, and verifier exit result. |
-| `commands.json`, `execution.json`, `manifest.json` in `evidence/` | Normalizer argv and exit codes, verifier argv and exit code, versions, source commit, and SHA-256 hashes. The manifest intentionally does not hash itself. |
+| `commands.json`, `execution.json`, `manifest.json` in `evidence/` | Normalizer argv and exit codes, verifier argv and exit code, versions, source commit, source-worktree cleanliness, and SHA-256 hashes. The selected output directory is excluded from the cleanliness check so `--overwrite` can record a clean source state during regeneration. The manifest intentionally does not hash itself. |
 
 Generated-artifact hash keys use the `packet/` prefix and are relative to the
 evidence packet, so the manifest remains accurate when `--output-dir` points to

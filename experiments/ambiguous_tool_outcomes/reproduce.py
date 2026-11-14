@@ -182,7 +182,8 @@ def _write_manifest(
         "schema_version": "tfb-ambiguous-tool-outcomes-evidence-v1",
         "executed_at_utc": datetime.now(UTC).isoformat(),
         "repository_commit": repository_commit,
-        "repository_worktree_clean_before_evidence_generation": worktree_clean_before_generation,
+        "repository_source_worktree_clean_before_generation": worktree_clean_before_generation,
+        "evidence_output_directory_excluded_from_cleanliness_check": _relative(output_dir),
         "source_sha256_used_for_both_scenarios": source_sha256,
         "versions": {
             "python": sys.version.split()[0],
@@ -235,7 +236,16 @@ def main(argv: list[str] | None = None) -> int:
         capture_output=True,
         text=True,
     ).stdout
-    worktree_clean_before_generation = not bool(worktree_status.strip())
+    output_relative = _relative(output_dir).rstrip("/")
+    source_changes = [
+        line
+        for line in worktree_status.splitlines()
+        if not (
+            line[3:].rstrip("/").replace("\\", "/") == output_relative
+            or line[3:].replace("\\", "/").startswith(f"{output_relative}/")
+        )
+    ]
+    worktree_clean_before_generation = not source_changes
     output_dir.mkdir(parents=True, exist_ok=True)
 
     before_text, before_truth = simulate_provider("before_commit_timeout")
