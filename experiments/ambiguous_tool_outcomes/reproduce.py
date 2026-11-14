@@ -126,7 +126,11 @@ def _sha256(path: Path) -> str:
 
 
 def _relative(path: Path) -> str:
-    return Path(os.path.relpath(path, REPO_ROOT)).as_posix()
+    try:
+        return Path(os.path.relpath(path, REPO_ROOT)).as_posix()
+    except ValueError:
+        # Windows cannot compute a relative path between different drive roots.
+        return path.resolve().as_posix()
 
 
 def _version(name: str) -> str:
