@@ -11,20 +11,22 @@ from pathlib import Path
 
 import pytest
 
-from experiments.ambiguous_tool_outcomes.verify import verify_experiment
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
 EXPERIMENT_ROOT = REPO_ROOT / "experiments" / "ambiguous_tool_outcomes"
 
 
-@pytest.fixture(scope="module")
-def evidence(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    output_dir = tmp_path_factory.mktemp("ambiguous-tool-outcomes")
+def _runtime_env() -> dict[str, str]:
     env = os.environ.copy()
     paths = [str(REPO_ROOT), str(REPO_ROOT / "src")]
     if env.get("PYTHONPATH"):
         paths.append(env["PYTHONPATH"])
     env["PYTHONPATH"] = os.pathsep.join(paths)
+    return env
+
+
+@pytest.fixture(scope="module")
+def evidence(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    output_dir = tmp_path_factory.mktemp("ambiguous-tool-outcomes")
     subprocess.run(
         [
             sys.executable,
@@ -34,7 +36,7 @@ def evidence(tmp_path_factory: pytest.TempPathFactory) -> Path:
             str(output_dir),
         ],
         cwd=REPO_ROOT,
-        env=env,
+        env=_runtime_env(),
         check=True,
         capture_output=True,
         text=True,
@@ -109,17 +111,41 @@ def test_experiment_verifier_rejects_fabricated_status_and_unreported_loss(
         candidate = copy.deepcopy(original)
         mutate(candidate)
         candidate_path = tmp_path / f"{name}.atif.json"
+        report_path = tmp_path / f"{name}.verification.json"
         candidate_path.write_text(json.dumps(candidate), encoding="utf-8")
-        report = verify_experiment(
-            source_path=source,
-            ground_truth_before_path=truth_before,
-            ground_truth_after_path=truth_after,
-            before_output_path=candidate_path,
-            after_output_path=after_output,
-            decision_record_path=decision,
-            oracle_path=oracle,
-            commands_path=commands,
+        completed = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "experiments.ambiguous_tool_outcomes.verify",
+                "--source",
+                str(source),
+                "--ground-truth-before",
+                str(truth_before),
+                "--ground-truth-after",
+                str(truth_after),
+                "--before-output",
+                str(candidate_path),
+                "--after-output",
+                str(after_output),
+                "--decision-record",
+                str(decision),
+                "--oracle",
+                str(oracle),
+                "--commands",
+                str(commands),
+                "--report",
+                str(report_path),
+            ],
+            cwd=REPO_ROOT,
+            env=_runtime_env(),
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=120,
         )
+        assert completed.returncode == 1, completed.stderr
+        report = json.loads(report_path.read_text(encoding="utf-8"))
         assert report["summary"]["passed"] is False
         check_names = {check["name"] for check in report["checks"]}
         matching_names = set(expected_checks[name]) & check_names
