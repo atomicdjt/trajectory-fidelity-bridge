@@ -170,7 +170,6 @@ def _write_manifest(
         EXPERIMENT_ROOT / "decision-record.json",
         EXPERIMENT_ROOT / "README.md",
         REPO_ROOT / "tests" / "test_ambiguous_tool_outcomes.py",
-        REPO_ROOT / "pyproject.toml",
     ]
     hashes = {
         f"packet/{path.name}": _sha256(path)

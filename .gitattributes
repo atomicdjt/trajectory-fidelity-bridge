@@ -2,3 +2,8 @@
 # a checkout with core.autocrlf=true (the Windows default, including CI runners) writes
 # CRLF line endings and the recorded hash no longer matches the file on disk.
 fixtures/real-session/*.jsonl -text
+
+# The ambiguous-tool experiment hashes its artifacts and source; keep those bytes stable
+# across Windows and Unix checkouts.
+experiments/ambiguous_tool_outcomes/** text eol=lf
+tests/test_ambiguous_tool_outcomes.py text eol=lf
