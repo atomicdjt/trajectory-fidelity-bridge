@@ -82,7 +82,7 @@
       "provenance": {
         "original_format": "codex-rollout-jsonl",
         "converted_by": "trajectory-fidelity-bridge",
-        "conversion_timestamp": "2026-11-14T11:25:01.827300+00:00"
+        "conversion_timestamp": "2026-11-14T11:30:28.642428+00:00"
       },
       "fidelity": {
         "source_records_preserved": 4,

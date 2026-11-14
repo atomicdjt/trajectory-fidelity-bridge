@@ -1,7 +1,7 @@
 {
   "schema_version": "tfb-ambiguous-tool-outcomes-evidence-v1",
-  "executed_at_utc": "2026-11-14T11:25:03.048426+00:00",
-  "repository_commit": "ae2415ad28f15759ccf22c9e16582efceed7b818",
+  "executed_at_utc": "2026-11-14T11:30:30.225330+00:00",
+  "repository_commit": "1a1684e51c33991c34d34ce79a2c04f4b45d5348",
   "repository_source_worktree_clean_before_generation": true,
   "evidence_output_directory_excluded_from_cleanliness_check": "experiments/ambiguous_tool_outcomes/evidence",
   "source_sha256_used_for_both_scenarios": "df1a2a14da1d040e62274740a385d8c5387ebadf061272b1f6bfea6b6a9bb1fa",
@@ -85,8 +85,8 @@
     "packet/ground-truth-before_commit_timeout.json": "8872ac3e5d211470b9712bd0a5a469556a62f229f0f23154d5409e6b1847360f",
     "packet/ground-truth-after_commit_response_loss.json": "ec5e2267a365625d3459a20b71e52921cc151684adfca3ef52e2be00588e0c3a",
     "packet/decision-record.json": "637e5cf916ffe5b095110cc35b489804e92f2567f6946a70cdb15e03e41e474d",
-    "packet/before_commit_timeout.atif.json": "ca013f1af94b7ee39157251a8a5a97721d154d65b5adcd1c13de632068a72071",
-    "packet/after_commit_response_loss.atif.json": "4d7120ee0d62a5ad0474cf6ac208b511ad8e4dd67c9575db498f10ee13c8788d",
+    "packet/before_commit_timeout.atif.json": "3d48cb7af74a3fed79aa4ec517fc9cd23f65a2287bdabbfd53e36d2c2a96e0eb",
+    "packet/after_commit_response_loss.atif.json": "9593521d30318c877a615d5f2d3b3f74194ef09a6deaa04adec7cfc5089d5326",
     "packet/before_commit_timeout.fidelity.json": "456850e5d7ef7d6707da2f4e08212c2886abd151e14468485a031c3ca258212e",
     "packet/after_commit_response_loss.fidelity.json": "456850e5d7ef7d6707da2f4e08212c2886abd151e14468485a031c3ca258212e",
     "packet/commands.json": "8a002876703cb637008c9a30dbad67e593dccb01e7eddecab434163dae2725a1",
@@ -103,7 +103,7 @@
     "experiments/ambiguous_tool_outcomes/oracle.json": "e0bf7c3f376d829b860f3b9941ac5c65f055851a7d17b383b9dc9eab672e6eb7",
     "experiments/ambiguous_tool_outcomes/decision-record.json": "637e5cf916ffe5b095110cc35b489804e92f2567f6946a70cdb15e03e41e474d",
     "experiments/ambiguous_tool_outcomes/README.md": "a35685c32e3d59806081232ba8ba62a79696c4da0025b693c0fe4253237f4e3c",
-    "tests/test_ambiguous_tool_outcomes.py": "e03293ab174ef19591dc40a249a8a1b5d90f511222dde5b1f27daed6acc31b7b"
+    "tests/test_ambiguous_tool_outcomes.py": "b902c718c79d8a1f9dd1c5a46f45bede223d4e9bb13ce4d1f83e42dc5a3755ae"
   },
   "hash_note": "This file does not include its own hash."
 }
