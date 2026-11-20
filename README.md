@@ -76,6 +76,13 @@ tfb import --from claude-code --source your_claude_log.jsonl --output trajectory
 tfb explain trajectory.atif.json --output report.md
 ```
 
+To try a safe synthetic fixture from a repository checkout (after installing the package), run:
+
+```bash
+tfb import --from claude-code --source fixtures/claude_sample.jsonl --output trajectory.atif.json --report
+tfb explain trajectory.atif.json --output report.md
+```
+
 For the repository's [synthetic sample](https://github.com/atomicdjt/trajectory-fidelity-bridge/blob/main/fixtures/claude_sample.jsonl), the import command's `--report` produces:
 
 ```text
