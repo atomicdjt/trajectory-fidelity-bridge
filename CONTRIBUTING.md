@@ -34,10 +34,10 @@ source .venv/bin/activate
 .\.venv\Scripts\Activate.ps1
 ```
 
-Install the project and development dependencies:
+Install the project, development dependencies, and observability extras (the full test suite includes observability tests):
 
 ```bash
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[dev,observability]"
 ```
 
 > The current PyPI distribution is `atomicdjt-trajectory-fidelity-bridge`. The shorter `agent-session-bridge` name belongs to an unrelated project. The previous `atomicdjt-agent-session-bridge` distribution remains available for existing installations.
