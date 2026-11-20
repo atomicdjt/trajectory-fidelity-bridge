@@ -1,0 +1,22 @@
+{
+  "schema_version": "tfb-synthetic-provider-truth-v1",
+  "scenario": "before_commit_timeout",
+  "harness_join_key": {
+    "kind": "codex_tool_call_id",
+    "value": "synthetic-call-001",
+    "meaning": "test-harness association only; not a provider operation ID"
+  },
+  "provider_operation_identity_observed": false,
+  "idempotency_key_observed": false,
+  "retry_attempt_count": 0,
+  "events": [
+    {
+      "event": "request_received"
+    },
+    {
+      "event": "deadline_expired_before_commit"
+    }
+  ],
+  "effects": [],
+  "actual_effect_count": 0
+}

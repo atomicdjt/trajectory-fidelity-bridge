@@ -1,0 +1,25 @@
+{
+  "schema_version": "tfb-ambiguous-tool-outcome-decision-v1",
+  "decision_basis": "caller-visible source transcript only",
+  "scenarios": {
+    "before_commit_timeout": {
+      "external_effect_outcome": "UNKNOWN",
+      "automatic_retry": "NOT_AUTHORIZED_FROM_AVAILABLE_EVIDENCE"
+    },
+    "after_commit_response_loss": {
+      "external_effect_outcome": "UNKNOWN",
+      "automatic_retry": "NOT_AUTHORIZED_FROM_AVAILABLE_EVIDENCE"
+    }
+  },
+  "retry_may_be_reconsidered_if": [
+    "A documented, still-valid provider deduplication guarantee covers the original operation and the retry.",
+    "Authoritative reconciliation establishes that the original action did not occur.",
+    "An application-specific recovery procedure has demonstrated safety properties for this action."
+  ],
+  "insufficient_evidence": [
+    "A timeout by itself.",
+    "An absent success receipt.",
+    "A stale, ambiguous, unavailable, or nonauthoritative reconciliation result.",
+    "A tool-call ID without a provider deduplication contract."
+  ]
+}

@@ -1,0 +1,4 @@
+{"type":"session_meta","payload":{"id":"synthetic-ambiguous-session","cli_version":"0.0.synthetic"}}
+{"type":"response_item","timestamp":"2026-11-14T12:00:00Z","payload":{"id":"item-user-001","type":"message","role":"user","content":[{"type":"input_text","text":"Perform the synthetic action for fixture-record-001."}]}}
+{"type":"response_item","timestamp":"2026-11-14T12:00:01Z","payload":{"id":"item-call-001","type":"function_call","call_id":"synthetic-call-001","name":"synthetic_external_action","arguments":"{\"action\":\"create_marker\",\"record\":\"fixture-record-001\"}"}}
+{"type":"response_item","timestamp":"2026-11-14T12:00:04Z","payload":{"id":"item-output-001","type":"function_call_output","call_id":"synthetic-call-001","output":"Tool call timed out; no provider receipt or authoritative effect status was returned."}}

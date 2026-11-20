@@ -1,0 +1,8 @@
+
+--- TFB Fidelity Report ---
+Source records preserved: 4
+Tool calls preserved:     1
+Observations preserved:   1
+Unsupported records:      0
+Unsupported blocks:       0
+---------------------------

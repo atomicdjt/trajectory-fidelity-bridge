@@ -1,0 +1,40 @@
+[
+  {
+    "scenario": "before_commit_timeout",
+    "source": "experiments/ambiguous_tool_outcomes/evidence/caller-visible.source.jsonl",
+    "source_sha256": "df1a2a14da1d040e62274740a385d8c5387ebadf061272b1f6bfea6b6a9bb1fa",
+    "argv": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "cli.main",
+      "import",
+      "--from",
+      "codex",
+      "--source",
+      "experiments/ambiguous_tool_outcomes/evidence/caller-visible.source.jsonl",
+      "--output",
+      "experiments/ambiguous_tool_outcomes/evidence/before_commit_timeout.atif.json",
+      "--report"
+    ],
+    "exit_code": 0
+  },
+  {
+    "scenario": "after_commit_response_loss",
+    "source": "experiments/ambiguous_tool_outcomes/evidence/caller-visible.source.jsonl",
+    "source_sha256": "df1a2a14da1d040e62274740a385d8c5387ebadf061272b1f6bfea6b6a9bb1fa",
+    "argv": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "cli.main",
+      "import",
+      "--from",
+      "codex",
+      "--source",
+      "experiments/ambiguous_tool_outcomes/evidence/caller-visible.source.jsonl",
+      "--output",
+      "experiments/ambiguous_tool_outcomes/evidence/after_commit_response_loss.atif.json",
+      "--report"
+    ],
+    "exit_code": 0
+  }
+]
